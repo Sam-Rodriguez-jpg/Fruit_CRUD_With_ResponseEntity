@@ -58,6 +58,7 @@ public class FruitController {
     }
 
 
+
     // POST FOR ONE
     @PostMapping
     public ResponseEntity<FruitModel> postFruit(@RequestBody FruitModel inputFruit) {
@@ -135,5 +136,14 @@ public class FruitController {
             }
         }
         return new ResponseEntity<>(HttpStatus.valueOf(404));
+    }
+
+
+
+    // DELETE ALL
+    @DeleteMapping("/dropDatabase")
+    public ResponseEntity<FruitModel> deleteDatabase() {
+        fruitsList.clear();
+        return new ResponseEntity<>(HttpStatus.valueOf(204));
     }
 }
