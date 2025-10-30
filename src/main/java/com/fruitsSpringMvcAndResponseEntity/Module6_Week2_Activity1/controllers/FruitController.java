@@ -7,26 +7,54 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 
-import static com.fruitsSpringMvcAndResponseEntity.Module6_Week2_Activity1.config.Database.fruitsList;
+import static com.fruitsSpringMvcAndResponseEntity.Module6_Week2_Activity1.repository.Database.fruitsList;
 
 @RestController
 @RequestMapping("/fruits")
 public class FruitController {
     // GET ALL
     @GetMapping
-    public ResponseEntity<ArrayList<FruitModel>> getAllFruits() {
-        if (fruitsList.isEmpty()) return new ResponseEntity<>(fruitsList, HttpStatus.valueOf(204));
-        return new ResponseEntity<>(fruitsList, HttpStatus.valueOf(200));
+    public ResponseEntity<String> getAllFruits() {
+        // Nota: El 204, no puede retornar cuerpo
+        if (fruitsList.isEmpty()) return new ResponseEntity<>(HttpStatus.valueOf(204));
+
+        StringBuilder listFruitsOutput = new StringBuilder();
+        for(FruitModel fruit : fruitsList) {
+            listFruitsOutput.append(fruit.toString()).append("\n");
+        }
+        return new ResponseEntity<>(listFruitsOutput.toString(), HttpStatus.valueOf(200));
     }
 
 
     // GET BY ID
     @GetMapping("/{inputIdFruit}")
-    public ResponseEntity<FruitModel> getByIdFruit(@PathVariable String inputIdFruit) {
+    public ResponseEntity<String> getByIdFruit(@PathVariable String inputIdFruit) {
         for (FruitModel fruit : fruitsList) {
-            if (fruit.getIdFruit().equals(inputIdFruit)) return new ResponseEntity<>(fruit, HttpStatus.valueOf(200));
+            if (fruit.getIdFruit().equals(inputIdFruit)) return new ResponseEntity<>(fruit.toString(), HttpStatus.valueOf(200));
         }
-        return new ResponseEntity<>(HttpStatus.valueOf(404));
+        return new ResponseEntity<>("Fruta no encontrada con ese ID", HttpStatus.valueOf(404));
+    }
+
+
+
+    // GET LIST
+    @GetMapping("/getFruitList")
+    public ResponseEntity<String> getFruitList(@RequestParam ArrayList<String> inputIdFruit) {
+        ArrayList<String> inputFruitList = new ArrayList<>(inputIdFruit);
+
+        if(inputFruitList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.valueOf(204));
+        }
+
+        StringBuilder outputFruitList = new StringBuilder();
+        for(String IdFruit : inputFruitList) {
+            for(FruitModel fruit : fruitsList) {
+                if (IdFruit.equals(fruit.getIdFruit())) {
+                    outputFruitList.append(fruit).append("\n");
+                }
+            }
+        }
+        return new ResponseEntity<>(outputFruitList.toString(), HttpStatus.valueOf(200));
     }
 
 

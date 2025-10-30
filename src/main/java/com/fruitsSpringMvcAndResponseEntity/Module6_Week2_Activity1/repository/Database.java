@@ -1,4 +1,4 @@
-package com.fruitsSpringMvcAndResponseEntity.Module6_Week2_Activity1.config;
+package com.fruitsSpringMvcAndResponseEntity.Module6_Week2_Activity1.repository;
 
 import com.fruitsSpringMvcAndResponseEntity.Module6_Week2_Activity1.models.FruitModel;
 

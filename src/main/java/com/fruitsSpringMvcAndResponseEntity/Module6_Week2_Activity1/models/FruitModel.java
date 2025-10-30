@@ -7,7 +7,7 @@ public class FruitModel {
     private String priceFruit;
 
     // Id Auto-Increment
-    private static int idFruitAggregation = 1;
+    private static int idFruitAutoIncrement = 1;
 
     // Constructors
 
@@ -15,7 +15,7 @@ public class FruitModel {
     public FruitModel() {}
 
     public FruitModel(String nameFruit, String colorFruit, String priceFruit) {
-        this.idFruit = String.valueOf(idFruitAggregation++);
+        this.idFruit = String.valueOf(idFruitAutoIncrement++);
         this.nameFruit = nameFruit;
         this.colorFruit = colorFruit;
         this.priceFruit = priceFruit;
